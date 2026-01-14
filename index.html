@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chat Embedded Messaging</title>
+
+  <!-- Stili di base, facoltativi -->
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 2rem; }
+    .container { max-width: 680px; margin: 0 auto; }
+    .status { margin-top: 1rem; color: #555; font-size: 0.95rem; }
+    button { background:#0f62fe; color:#fff; border:none; padding:.75rem 1rem; border-radius:.5rem; cursor:pointer; }
+    button:hover { background:#0353e9; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Benvenuta/o 👋</h1>
+    <p>Questa pagina dimostrativa carica Salesforce <strong>Embedded Messaging</strong>.</p>
+
+    <p>
+      <button id="open-chat" type="button">Apri chat</button>
+    </p>
+    <p class="status" id="status">Stato: in attesa di inizializzazione…</p>
+  </div>
+
+  <!-- 1) BOOTSTRAP DI SALESFORCE (Sostituisci l'URL con quello del tuo org/ambiente) -->
+  <!-- Esempio (PLACEHOLDER): -->
+  <!-- https://YOUR-DOMAIN/embeddedservice/asyncapi/bootstrap.min.js</script> -->
+  <!-- Oppure, in alcuni setup: -->
+  <!-- https://service.force.com/embeddedservice/5.0/esw.min.js</script> -->
+
+  <!-- 2) IL TUO SNIPPET: inserirlo prima della chiusura del body -->
+  <script>
+    function initEmbeddedMessaging() {
+      try {
+        embeddedservice_bootstrap.settings.language = 'it'; // es: 'en' o 'en-US'
+
+        embeddedservice_bootstrap.init(
+          '00D9M00000KpDYn',
+          'ChatSbri',
+          'https://compasscrm--sabrychat.sandbox.my.site.com/ESWChatSbri1767968451890',
+          {
+            scrt2URL: 'https://compasscrm--sabrychat.sandbox.my.salesforce-scrt.com'
+          }
+        );
+
+        document.getElementById('status').textContent = 'Stato: inizializzato.';
+      } catch (err) {
+        console.error('Error loading Embedded Messaging: ', err);
+        document.getElementById('status').textContent = 'Errore durante l’inizializzazione (vedi console).';
+      }
+    }
+
+    // Avvio automatico quando lo script di bootstrap è pronto (fallback: onload della pagina)
+    // Se il tuo bootstrap espone un evento di "ready", aggancialo lì. Altrimenti:
+    window.addEventListener('load', function () {
+      // Piccolo delay per dare tempo al bootstrap (se caricato con defer)
+      setTimeout(initEmbeddedMessaging, 100);
+    });
+
+    // Pulsante per aprire/mostrare la UI di chat, se supportato dalla tua configurazione
+    document.getElementById('open-chat').addEventListener('click', function () {
+      try {
+        // Alcune implementazioni espongono API (es.: embeddedservice_bootstrap.utilAPI.openChat());
+        // Se non hai API pubbliche, il widget dovrebbe mostrarsi da solo dopo init.
+        console.log('Richiesta apertura chat (verifica eventuali API pubbliche nella tua org).');
+      } catch (e) {
+        console.warn('API di apertura chat non disponibili:', e);
+      }
+    });
+  </script>
+</body>
+</html>
+
