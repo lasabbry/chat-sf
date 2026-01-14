@@ -39,6 +39,22 @@
       try {
         embeddedservice_bootstrap.settings.language = 'it'; // es: 'en' o 'en-US'
 
+
+      window.addEventListener('onEmbeddedMessagingReady', () => {
+              window.embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+                "ActionName": "Supporto Heylight",
+                "Origin": "Portale HeyLight",
+                "Categoria": "Categoria Portale HeyLight 3",
+                "RawActionName": "Supporto",
+                "ProductName": "Prodotto di test",
+                "MerchantName": "Heylight",
+                "MerchantID": "5498730",
+                "SessionID": "453455498730",
+                "OpsApplicationUrl": "https://www.google.com/",
+                "OriginationChannel": "Test Origination Channel"
+              });
+            }); 
+        
         embeddedservice_bootstrap.init(
           '00D9M00000KpDYn',
           'ChatSbri',
@@ -76,5 +92,6 @@
   <script type='text/javascript' src='https://compasscrm--sabrychat.sandbox.my.site.com/ESWChatSbri1767968451890/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
 </body>
 </html>
+
 
 
